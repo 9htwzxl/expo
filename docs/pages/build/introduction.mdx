@@ -1,171 +1,247 @@
----
-title: Expo Build
-sidebar_title: Introduction
-description: Expo Build is a hosted service for building app binaries for your Expo and React Native projects.
----
 
-import { Cube01Icon } from '@expo/styleguide-icons/outline/Cube01Icon';
+import React from 'react';
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+  StatusBar,
+  Alert
+} from 'react-native';
 
-import { BoxLink } from '~/ui/components/BoxLink';
-import { Collapsible } from '~/ui/components/Collapsible';
-import { NoIcon, YesIcon } from '~/ui/components/DocIcons';
-import { FAQ } from '~/ui/components/FAQ';
-import { RelatedSkills } from '~/ui/components/RelatedSkills';
-import { SimulatorsLaunchCallout } from '~/ui/components/SimulatorsLaunchCallout';
-import { Terminal } from '~/ui/components/Snippet';
+export default function App() {
+  return (
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="light-content" />
 
-**Expo Build** is a hosted service that builds app binaries (also called [standalone apps](/more/glossary-of-terms/#standalone-app)) for your Expo and React Native projects.
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.header}>
+          <View>
+            <Text style={styles.logo}>BASE <Text style={styles.blue}>88</Text></Text>
+            <Text style={styles.subtitle}>YOUR GROWTH STARTS HERE.</Text>
+          </View>
+          <Text style={styles.profile}>B88</Text>
+        </View>
 
-Expo Build makes building your apps for distribution simple and easy to automate by providing defaults that work well for Expo and React Native projects out of the box, and by handling your app signing credentials for you (if you wish). It also makes sharing builds with your team easier than ever with [internal distribution](/build/internal-distribution/) (using [ad hoc](/build/internal-distribution/) and/or enterprise "universal" provisioning), deeply integrates with Expo Submit for app store submissions, and has first-class support for the [`expo-updates`](/build/updates/) library.
+        <View style={styles.hero}>
+          <Text style={styles.tag}>AI-POWERED MARKETING AGENCY</Text>
+          <Text style={styles.heading}>
+            Grow Your Brand.{"\n"}
+            <Text style={styles.blue}>Dominate Social.</Text>
+          </Text>
+          <Text style={styles.description}>
+            Powerful social media marketing and creative
+            strategies designed to grow your business.
+          </Text>
 
-Expo Build is also designed to work for any native project, whether or not you use Expo and React Native. It's the fastest way to get from `npx create-expo-app` or `npx @react-native-community/cli@latest init` to app stores.
+          <TouchableOpacity
+            style={styles.primaryButton}
+            onPress={() => Alert.alert('BASE 88', 'Getting started soon!')}
+          >
+            <Text style={styles.buttonText}>GET STARTED  →</Text>
+          </TouchableOpacity>
+        </View>
 
-<SimulatorsLaunchCallout />
+        <Text style={styles.sectionTitle}>WHAT WE DO</Text>
 
-## Quick start
+        {[
+          ['01', 'Social Media Management', 'Build a stronger online presence.'],
+          ['02', 'Content Creation', 'Professional content for your brand.'],
+          ['03', 'Growth Marketing', 'Strategies designed to attract customers.'],
+          ['04', 'Lead Generation', 'Turn attention into business opportunities.']
+        ].map((item) => (
+          <View style={styles.service} key={item[0]}>
+            <Text style={styles.number}>{item[0]}</Text>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.serviceTitle}>{item[1]}</Text>
+              <Text style={styles.serviceDescription}>{item[2]}</Text>
+            </View>
+            <Text style={styles.arrow}>↗</Text>
+          </View>
+        ))}
 
-> **info** The commands for Expo Build start with `eas` and require EAS CLI. See [How to install EAS CLI](/eas/cli/#installation) for more information.
+        <Text style={styles.sectionTitle}>OUR PACKAGES</Text>
 
-To build your app, run the following command:
+        {[
+          ['LAUNCH', '$499', 'Perfect for getting started.'],
+          ['GROWTH', '$1,499', 'For brands ready to scale.'],
+          ['ELITE', '$2,999', 'Premium marketing support.']
+        ].map((item) => (
+          <View style={styles.package} key={item[0]}>
+            <Text style={styles.packageName}>{item[0]}</Text>
+            <Text style={styles.price}>{item[1]}<Text style={styles.month}> / month</Text></Text>
+            <Text style={styles.serviceDescription}>{item[2]}</Text>
+          </View>
+        ))}
 
-<Terminal cmd={['$ eas build --platform all']} />
+        <View style={styles.footer}>
+          <Text style={styles.logo}>BASE <Text style={styles.blue}>88</Text></Text>
+          <Text style={styles.footerText}>
+            YOUR BRAND. YOUR AUDIENCE. YOUR GROWTH.
+          </Text>
+          <Text style={styles.copyright}>© 2026 BASE 88. ALL RIGHTS RESERVED.</Text>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
 
-This command sends your project to Expo Build and produces installable binaries for Android and iOS. You can also build for one platform at a time by passing in `--platform android` or `--platform ios` as desired. For complete setup instructions, see [Create your first build](/build/setup/).
-
-### Expo Skills for AI agents
-
-If you use an AI agent, install [Expo Skills](/skills/) to teach it how to create production builds and ship them to the app stores:
-
-<RelatedSkills names={['eas-app-stores']} />
-
-## Key features
-
-- Cloud builds for Android and iOS with consistent environments
-- Automatically provision and manage app signing credentials or use your own
-- Share [internal distribution](/build/internal-distribution/) builds with a URL
-- Automate builds with [build profiles](/build/eas-json/#build-profiles) in **eas.json** (named sets of build settings) and integrations with [Expo Workflows](/eas/workflows/get-started/) or [CI pipelines](/build/building-on-ci/)
-- Auto-submit successful builds to app stores via [`--auto-submit`](/build/automate-submissions/) and Expo Submit
-- First-class [`expo-updates` integration](/build/updates/) with per-profile channels and [runtime version](/eas-update/runtime-versions/) guidance
-- Reuse [development builds](/develop/development-builds/introduction/) across your team. When two team members run `eas build:dev` and the project fingerprint matches, the existing build is downloaded from Expo Build instead of creating a new one
-- Faster builds via [dependency caching and custom cache paths](/build-reference/caching/)
-- Install builds and updates on devices with [Expo Orbit](https://expo.dev/orbit)
-
-## When to use Expo Build
-
-| Scenario                                                                             | Recommendation |
-| ------------------------------------------------------------------------------------ | -------------- |
-| Build production-ready binaries for app stores                                       | <YesIcon />    |
-| Share builds with testers via [internal distribution](/build/internal-distribution/) | <YesIcon />    |
-| Consistent builds across team members without local environment setup                | <YesIcon />    |
-| Automate builds from CI or [Expo Workflows](/eas/workflows/get-started/)             | <YesIcon />    |
-| Managed app signing credentials                                                      | <YesIcon />    |
-| Debugging native code locally                                                        | <NoIcon />     |
-
-## Frequently asked questions
-
-<FAQ>
-
-<Collapsible summary="How do I share builds with my team before submitting to app stores?">
-
-Use [internal distribution](/build/internal-distribution/) to share builds with a URL. Set `"distribution": "internal"` in your [build profile](/build/eas-json/#build-profiles) in **eas.json** to generate installable Android Package (APK) files for Android or [ad hoc builds](/build/internal-distribution/) for iOS.
-
-</Collapsible>
-
-<Collapsible summary="Can I use Expo Build with existing React Native projects?">
-
-Yes. Expo Build works with existing React Native projects created with `npx react-native init` or similar tools. See [Overview of using Expo with existing React Native apps](/bare/overview/) for more information.
-
-</Collapsible>
-
-<Collapsible summary="Does Expo Build handle app signing credentials?">
-
-Yes. Expo Build can generate and manage Android [keystores](/app-signing/app-credentials/#android), iOS [provisioning profiles](/app-signing/app-credentials/#ios) and [distribution certificates](/app-signing/app-credentials/#ios), or use credentials you provide. See [App signing credentials](/app-signing/app-credentials/) for more information.
-
-</Collapsible>
-
-<Collapsible summary="Can I run builds locally instead of in the cloud?">
-
-Yes. Use [local builds](/build-reference/local-builds/) with `eas build --local` to run builds on your machine. This is useful for debugging or for security policies that require local builds.
-
-</Collapsible>
-
-<Collapsible summary="Can I use Expo Build with Expo Workflows or CI pipelines?">
-
-Yes. Expo Build integrates with [Expo Workflows](/eas/workflows/get-started/) using the `build` job type. Add a build job to your workflow configuration, for example:
-
-```yaml
-jobs:
-  build_ios:
-    type: build
-    params:
-      platform: ios
-```
-
-The build job supports builds for both platforms or conditional builds based on the branch:
-
-```yaml
-jobs:
-  build:
-    type: build
-    params:
-      platform: all
-      profile: ${{ github.ref_name == 'main' && 'production' || 'preview' }}
-```
-
-For more information and other usage examples, see the [Expo Workflows build job](/eas/workflows/pre-packaged-jobs#build).
-
-Expo Build supports [builds from GitHub](/build/building-from-github/) and [building on CI](/build/building-on-ci/) with any provider.
-
-</Collapsible>
-
-<Collapsible summary="What build server infrastructure does Expo Build use?">
-
-Android builds run on Linux runners hosted in Google Cloud Platform, and iOS builds run on macOS runners hosted in Expo's macOS cloud. See [Build server infrastructure](/build-reference/infrastructure/).
-
-</Collapsible>
-
-</FAQ>
-
-## Get started
-
-<BoxLink
-  title="Create your first build"
-  description="It should only take a few minutes in total to get up and running for iOS and/or Android."
-  href="/build/setup"
-  Icon={Cube01Icon}
-/>
-
-<BoxLink
-  title="Share your apps with internal testers"
-  description="Expo Build can help share preview builds of your app with a single URL."
-  href="/build/internal-distribution"
-  Icon={Cube01Icon}
-/>
-
-<BoxLink
-  title="Automate submissions"
-  description="Learn how Expo Build can take your successful builds and handle uploading them to app stores automatically."
-  href="/build/automate-submissions"
-  Icon={Cube01Icon}
-/>
-
-<BoxLink
-  title="App version management"
-  description="Automate version bumps so you never have to think about them again."
-  href="/build-reference/app-versions"
-  Icon={Cube01Icon}
-/>
-
-<BoxLink
-  title="Run builds locally or on your own infrastructure"
-  description="Expo Build is a hosted service, and it can also run on your own machine, for example, to debug or to comply with company security policies."
-  href="/build-reference/local-builds"
-  Icon={Cube01Icon}
-/>
-
-<BoxLink
-  title="Limitations"
-  description="Expo Build is new and rapidly evolving, so we recommend getting familiar with the current limitations."
-  href="/build-reference/limitations"
-  Icon={Cube01Icon}
-/>
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#080B12',
+  },
+  header: {
+    padding: 24,
+    paddingTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor: '#1B2435',
+  },
+  logo: {
+    color: '#FFFFFF',
+    fontSize: 27,
+    fontWeight: '900',
+    letterSpacing: 2,
+  },
+  blue: {
+    color: '#168BFF',
+  },
+  subtitle: {
+    color: '#718096',
+    fontSize: 9,
+    letterSpacing: 2,
+    marginTop: 5,
+  },
+  profile: {
+    color: '#168BFF',
+    borderWidth: 1,
+    borderColor: '#168BFF',
+    padding: 10,
+    borderRadius: 10,
+    fontWeight: 'bold',
+  },
+  hero: {
+    padding: 25,
+    paddingTop: 65,
+    paddingBottom: 65,
+  },
+  tag: {
+    color: '#168BFF',
+    fontSize: 10,
+    letterSpacing: 2,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  heading: {
+    color: '#FFFFFF',
+    fontSize: 38,
+    fontWeight: '900',
+    lineHeight: 47,
+  },
+  description: {
+    color: '#9AA7B8',
+    fontSize: 15,
+    lineHeight: 25,
+    marginTop: 18,
+  },
+  primaryButton: {
+    backgroundColor: '#168BFF',
+    padding: 17,
+    borderRadius: 10,
+    marginTop: 28,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontWeight: '900',
+    letterSpacing: 1,
+  },
+  sectionTitle: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: '900',
+    letterSpacing: 2,
+    marginHorizontal: 24,
+    marginTop: 25,
+    marginBottom: 18,
+  },
+  service: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 20,
+    marginHorizontal: 20,
+    marginBottom: 10,
+    backgroundColor: '#101725',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#1C2B40',
+    gap: 14,
+  },
+  number: {
+    color: '#168BFF',
+    fontSize: 17,
+    fontWeight: 'bold',
+  },
+  serviceTitle: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
+  serviceDescription: {
+    color: '#8290A4',
+    fontSize: 12,
+    marginTop: 7,
+  },
+  arrow: {
+    color: '#168BFF',
+    fontSize: 22,
+  },
+  package: {
+    backgroundColor: '#101725',
+    borderColor: '#1C2B40',
+    borderWidth: 1,
+    borderRadius: 12,
+    padding: 22,
+    marginHorizontal: 20,
+    marginBottom: 12,
+  },
+  packageName: {
+    color: '#168BFF',
+    fontWeight: 'bold',
+    letterSpacing: 2,
+  },
+  price: {
+    color: '#FFFFFF',
+    fontSize: 29,
+    fontWeight: '900',
+    marginTop: 12,
+  },
+  month: {
+    color: '#8290A4',
+    fontSize: 12,
+    fontWeight: 'normal',
+  },
+  footer: {
+    alignItems: 'center',
+    padding: 35,
+    marginTop: 25,
+    borderTopWidth: 1,
+    borderColor: '#1B2435',
+  },
+  footerText: {
+    color: '#168BFF',
+    fontSize: 9,
+    letterSpacing: 1,
+    marginTop: 12,
+  },
+  copyright: {
+    color: '#64748B',
+    fontSize: 9,
+    marginTop: 20,
+  },
+});
